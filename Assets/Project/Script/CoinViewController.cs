@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -17,8 +18,21 @@ public class CoinViewController : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {
+    {   
         coinsText.text = coinsMessage + coinModel.AmountOfCOins();
+        if (coinModel.IsGamePaused())
+        {
+            Shop();
+        }
         
+    }
+
+    private void Shop()
+    {
+
+        Image shopBackground = this.gameObject.GetComponent<Image>();
+        var tempColor = shopBackground.color;
+        tempColor.a = 0.3f;
+        shopBackground.color = tempColor;
     }
 }

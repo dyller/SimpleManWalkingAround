@@ -28,10 +28,10 @@ public class playerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+       
         if(!insideCar)
             Player.transform.localEulerAngles = new Vector3(Player.transform.localEulerAngles.x, Player.transform.localEulerAngles.y, 0);
-        if (Input.GetKeyDown(KeyCode.Return))
+        if (Input.GetKeyDown(KeyCode.Return) && !coinModel.IsGamePaused())
         {
             if (!insideCar)
                 EnterCar(Player.transform.position, rangeCar);
@@ -42,6 +42,17 @@ public class playerController : MonoBehaviour
         {
             PauseGame();
         }
+        if(coinModel.IsGamePaused())
+        {
+            ThirdPersonCharacter thirdPersonCharacter = Player.GetComponent<ThirdPersonCharacter>();
+            thirdPersonCharacter.Move(new Vector3(0, 0, 0), false, false);
+            CarController carController = Car.GetComponent<CarController>();
+            if (m_Car.CurrentSpeed > 0.2)
+            {
+                //decrease car speed
+                m_Car.Move(0, 0, 0f, 20f);
+            }
+        }
     }
 
     private void PauseGame()
@@ -49,8 +60,8 @@ public class playerController : MonoBehaviour
         if (!coinModel.IsGamePaused())
         {
             coinModel.PauseGame();
-            ThirdPersonUserControl thirdPersonUserControl = Player.GetComponent<ThirdPersonUserControl>();
-           //thirdPersonUserControl.
+            Player.GetComponent<ThirdPersonUserControl>().enabled = false;
+            
             Car.GetComponent<CarUserControl>().enabled = false;
             Car.GetComponent<CarAudio>().enabled = false;
         }
@@ -59,6 +70,8 @@ public class playerController : MonoBehaviour
             Player.GetComponent<ThirdPersonUserControl>().enabled = true;
             coinModel.PauseGame();
             ChangeCarVariables(insideCar);
+            // to remove handbreak from car
+            m_Car.Move(0, 0, -1f, 0f);
         }
         
     }
@@ -98,7 +111,6 @@ public class playerController : MonoBehaviour
 
                 // to remove handbreak from car
                 m_Car.Move(0,  0, -1f, 0f);
-                Debug.Log(Camera.main.transform.position);
                 break;
                
             }
