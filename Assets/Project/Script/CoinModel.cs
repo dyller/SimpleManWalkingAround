@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using UnityEditorInternal;
 using UnityEngine;
 
@@ -8,6 +9,7 @@ public class CoinModel
 {
     public static CoinModel instance = null;
     private Boolean pause = false;
+    private int amountOfCoins = 1;
     private int coins = 0;
     public static CoinModel getInstance()
     {
@@ -18,9 +20,13 @@ public class CoinModel
         }
         return instance;
     }
-    public int AmountOfCOins()
+    public int AmountOfCoins()
     {
         return coins;
+    }
+    public void UseCoins(int usedCoins)
+    {
+        coins -= usedCoins;
     }
     public void AddCoin()
     {
@@ -33,5 +39,13 @@ public class CoinModel
     public Boolean IsGamePaused()
     {
         return pause;
+    }
+    public void IncreaseCoinsAmount()
+    {
+        amountOfCoins++;
+    }
+    public int AmountOfSpawnCoins()
+    {
+        return amountOfCoins;
     }
 }
