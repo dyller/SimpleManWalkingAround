@@ -5,6 +5,7 @@ using System.Configuration;
 using UnityEngine;
 using UnityStandardAssets.Characters.ThirdPerson;
 using UnityStandardAssets.Vehicles.Car;
+using Random = UnityEngine.Random;
 
 public class playerController : MonoBehaviour
 {
@@ -18,8 +19,9 @@ public class playerController : MonoBehaviour
     private Boolean insideCar = false;
     public GameObject mainCamera;
     public CarController m_Car; // the car controller we want to use
+
     // Start is called before the first frame update
-      void Start()
+    void Start()
     {
         coinModel = CoinModel.getInstance();
         
@@ -54,6 +56,8 @@ public class playerController : MonoBehaviour
             }
         }
     }
+
+   
 
     private void PauseGame()
     {
@@ -138,4 +142,5 @@ public class playerController : MonoBehaviour
         }
 
     }
+
 }
